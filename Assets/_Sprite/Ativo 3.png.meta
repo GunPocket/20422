@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: be9c6b9115f035745aa6427657f17d6a
+guid: cdca7f5916775e44aa87144465737917
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -43,9 +43,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
-  spriteExtrude: 0
-  spriteMeshType: 0
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 300
@@ -121,70 +121,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: atlas_Prancheta 1_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 3750
-        width: 750
-        height: 750
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1f2630f19ef0f1d4683b55f0702a9180
-      internalID: 491252701
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atlas_Prancheta 1_5
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 3000
-        width: 750
-        height: 750
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d54839be06b86cd45ad122e335e62c1a
-      internalID: 1095181939
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atlas_Prancheta 1_10
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 3000
-        height: 3000
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6e747b28b06ecbd4d93f760987705ec1
-      internalID: -77689804
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -195,42 +132,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      atlas_Prancheta 1_0: 491252701
-      atlas_Prancheta 1_1: -1809236228
-      atlas_Prancheta 1_10: -77689804
-      atlas_Prancheta 1_11: 879946936
-      atlas_Prancheta 1_12: -1595563323
-      atlas_Prancheta 1_13: -942463613
-      atlas_Prancheta 1_14: 742199375
-      atlas_Prancheta 1_15: -94738312
-      atlas_Prancheta 1_16: -2043292173
-      atlas_Prancheta 1_17: 67369113
-      atlas_Prancheta 1_18: 2019670298
-      atlas_Prancheta 1_19: -1632624443
-      atlas_Prancheta 1_2: 1960466572
-      atlas_Prancheta 1_20: 556063991
-      atlas_Prancheta 1_21: 1851451067
-      atlas_Prancheta 1_22: 1412287782
-      atlas_Prancheta 1_23: -773676833
-      atlas_Prancheta 1_24: 1686444504
-      atlas_Prancheta 1_25: -1512916133
-      atlas_Prancheta 1_26: 990630308
-      atlas_Prancheta 1_27: -229767842
-      atlas_Prancheta 1_28: -365218273
-      atlas_Prancheta 1_29: 97841781
-      atlas_Prancheta 1_3: -1877470813
-      atlas_Prancheta 1_30: -1835999460
-      atlas_Prancheta 1_31: -1035688528
-      atlas_Prancheta 1_32: -1127657065
-      atlas_Prancheta 1_33: 1307063103
-      atlas_Prancheta 1_34: 2011258961
-      atlas_Prancheta 1_4: 1357852460
-      atlas_Prancheta 1_5: 1095181939
-      atlas_Prancheta 1_6: 366137092
-      atlas_Prancheta 1_7: 91161058
-      atlas_Prancheta 1_8: 1902189017
-      atlas_Prancheta 1_9: -2113257747
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

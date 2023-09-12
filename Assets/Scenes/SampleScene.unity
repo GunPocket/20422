@@ -352,6 +352,7 @@ GameObject:
   m_Component:
   - component: {fileID: 997378009}
   - component: {fileID: 997378008}
+  - component: {fileID: 997378010}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -371,8 +372,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c84da4ffb5ba975418b6ba711a884913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInput: {fileID: 997378010}
   width: 4
   height: 4
+  travelTime: 0.2
   blockPrefab: {fileID: 1901745072140048104, guid: ef692a3cfa0770b4281816b2aa9fd1c1, type: 3}
   nodePrefab: {fileID: 7561815020769021746, guid: df45c37d9345b6e43a9b22a286232300, type: 3}
   boardPrfab: {fileID: 2396324105932750260, guid: 29dea10899d23c2498a81f2f38c55ac7, type: 3}
@@ -436,6 +439,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &997378010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997378007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f801ce2885a4c24c9b36923b75488ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
