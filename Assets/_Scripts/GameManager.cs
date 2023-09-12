@@ -90,6 +90,8 @@ public class GameManager : MonoBehaviour { //https://www.youtube.com/watch?v=Teu
 public struct BlockType {
     public int Value;
     public Color Color;
+    public Color TextColor;
+    public float FontSize;
 }
 
 public enum GameState {

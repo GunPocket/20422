@@ -376,31 +376,51 @@ MonoBehaviour:
   blockPrefab: {fileID: 1901745072140048104, guid: ef692a3cfa0770b4281816b2aa9fd1c1, type: 3}
   nodePrefab: {fileID: 7561815020769021746, guid: df45c37d9345b6e43a9b22a286232300, type: 3}
   boardPrfab: {fileID: 2396324105932750260, guid: 29dea10899d23c2498a81f2f38c55ac7, type: 3}
-  nodes: []
-  blocks: []
   blockTypes:
   - Value: 2
-    Color: {r: 0, g: 0, b: 0, a: 0}
+    Color: {r: 0.5529412, g: 0.8941177, b: 0.9333334, a: 1}
+    TextColor: {r: 1, g: 1, b: 1, a: 1}
+    FontSize: 5
   - Value: 4
-    Color: {r: 0, g: 0, b: 0, a: 0}
+    Color: {r: 0.7294118, g: 0.29803923, b: 0.91372555, a: 1}
+    TextColor: {r: 1, g: 1, b: 1, a: 1}
+    FontSize: 5
   - Value: 8
-    Color: {r: 0, g: 0, b: 0, a: 0}
+    Color: {r: 0.21960786, g: 0.5529412, b: 0.90196085, a: 1}
+    TextColor: {r: 1, g: 1, b: 1, a: 1}
+    FontSize: 5
   - Value: 16
-    Color: {r: 0, g: 0, b: 0, a: 0}
+    Color: {r: 0.5294118, g: 0.6901961, b: 0.91372555, a: 1}
+    TextColor: {r: 1, g: 1, b: 1, a: 1}
+    FontSize: 5
   - Value: 32
-    Color: {r: 0, g: 0, b: 0, a: 0}
+    Color: {r: 0.16862746, g: 0.36078432, b: 0.70980394, a: 1}
+    TextColor: {r: 1, g: 1, b: 1, a: 1}
+    FontSize: 5
   - Value: 64
-    Color: {r: 0, g: 0, b: 0, a: 0}
+    Color: {r: 0.43529415, g: 0.5019608, b: 0.92549026, a: 1}
+    TextColor: {r: 1, g: 1, b: 1, a: 1}
+    FontSize: 5
   - Value: 128
-    Color: {r: 0, g: 0, b: 0, a: 0}
+    Color: {r: 0.62352943, g: 0.48627454, b: 0.9176471, a: 1}
+    TextColor: {r: 1, g: 1, b: 1, a: 1}
+    FontSize: 5
   - Value: 256
-    Color: {r: 0, g: 0, b: 0, a: 0}
+    Color: {r: 0.9058824, g: 0.6039216, b: 0.93725497, a: 1}
+    TextColor: {r: 1, g: 1, b: 1, a: 1}
+    FontSize: 5
   - Value: 512
-    Color: {r: 0, g: 0, b: 0, a: 0}
+    Color: {r: 0.8941177, g: 0.87843144, b: 0.9333334, a: 1}
+    TextColor: {r: 1, g: 1, b: 1, a: 1}
+    FontSize: 5
   - Value: 1024
-    Color: {r: 0, g: 0, b: 0, a: 0}
+    Color: {r: 0.4431373, g: 0.36078432, b: 0.91372555, a: 1}
+    TextColor: {r: 1, g: 1, b: 1, a: 1}
+    FontSize: 3.7
   - Value: 2048
-    Color: {r: 0, g: 0, b: 0, a: 0}
+    Color: {r: 0.13333334, g: 0.19607845, b: 0.41960788, a: 1}
+    TextColor: {r: 1, g: 1, b: 1, a: 1}
+    FontSize: 3.7
 --- !u!4 &997378009
 Transform:
   m_ObjectHideFlags: 0
