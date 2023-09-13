@@ -373,57 +373,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 997378010}
-  width: 4
-  height: 4
-  travelTime: 0.2
-  blockPrefab: {fileID: 1901745072140048104, guid: ef692a3cfa0770b4281816b2aa9fd1c1, type: 3}
-  nodePrefab: {fileID: 7561815020769021746, guid: df45c37d9345b6e43a9b22a286232300, type: 3}
-  boardPrfab: {fileID: 2396324105932750260, guid: 29dea10899d23c2498a81f2f38c55ac7, type: 3}
-  blockTypes:
-  - Value: 2
-    Color: {r: 0.5529412, g: 0.8941177, b: 0.9333334, a: 1}
-    TextColor: {r: 1, g: 1, b: 1, a: 1}
-    FontSize: 5
-  - Value: 4
-    Color: {r: 0.7294118, g: 0.29803923, b: 0.91372555, a: 1}
-    TextColor: {r: 1, g: 1, b: 1, a: 1}
-    FontSize: 5
-  - Value: 8
-    Color: {r: 0.21960786, g: 0.5529412, b: 0.90196085, a: 1}
-    TextColor: {r: 1, g: 1, b: 1, a: 1}
-    FontSize: 5
-  - Value: 16
-    Color: {r: 0.5294118, g: 0.6901961, b: 0.91372555, a: 1}
-    TextColor: {r: 1, g: 1, b: 1, a: 1}
-    FontSize: 5
-  - Value: 32
-    Color: {r: 0.16862746, g: 0.36078432, b: 0.70980394, a: 1}
-    TextColor: {r: 1, g: 1, b: 1, a: 1}
-    FontSize: 5
-  - Value: 64
-    Color: {r: 0.43529415, g: 0.5019608, b: 0.92549026, a: 1}
-    TextColor: {r: 1, g: 1, b: 1, a: 1}
-    FontSize: 5
-  - Value: 128
-    Color: {r: 0.62352943, g: 0.48627454, b: 0.9176471, a: 1}
-    TextColor: {r: 1, g: 1, b: 1, a: 1}
-    FontSize: 5
-  - Value: 256
-    Color: {r: 0.9058824, g: 0.6039216, b: 0.93725497, a: 1}
-    TextColor: {r: 1, g: 1, b: 1, a: 1}
-    FontSize: 5
-  - Value: 512
-    Color: {r: 0.8941177, g: 0.87843144, b: 0.9333334, a: 1}
-    TextColor: {r: 1, g: 1, b: 1, a: 1}
-    FontSize: 5
-  - Value: 1024
-    Color: {r: 0.4431373, g: 0.36078432, b: 0.91372555, a: 1}
-    TextColor: {r: 1, g: 1, b: 1, a: 1}
-    FontSize: 3.7
-  - Value: 2048
-    Color: {r: 0.13333334, g: 0.19607845, b: 0.41960788, a: 1}
-    TextColor: {r: 1, g: 1, b: 1, a: 1}
-    FontSize: 3.7
+  _width: 3
+  _height: 3
+  _travelTime: 0.2
+  WinCondition: 2048
+  _blockPrefab: {fileID: 1901745072140048104, guid: ef692a3cfa0770b4281816b2aa9fd1c1, type: 3}
+  _nodePrefab: {fileID: 7561815020769021746, guid: df45c37d9345b6e43a9b22a286232300, type: 3}
+  _boardPrfab: {fileID: 2396324105932750260, guid: 29dea10899d23c2498a81f2f38c55ac7, type: 3}
+  _blockTypes:
+  - {fileID: 11400000, guid: 8fc257ff19e434847b0057cad22537d0, type: 2}
+  - {fileID: 11400000, guid: 31b22594774c79e4d9b51bab9d21a32d, type: 2}
+  - {fileID: 11400000, guid: 9170a6d37e547464fabcaf11f0b9b977, type: 2}
+  - {fileID: 11400000, guid: c505eff8124e549428c2889783b2497e, type: 2}
+  - {fileID: 11400000, guid: 560d78a6910fa7545b5c4b7bfa946cba, type: 2}
+  - {fileID: 11400000, guid: 8f643073e6c152148858a2a4c34bd0fe, type: 2}
+  - {fileID: 11400000, guid: 9e7387fc0f02a764098f74e02ca51b24, type: 2}
+  - {fileID: 11400000, guid: 567f00fef21f38e4ea1cb78995f0ee48, type: 2}
+  - {fileID: 11400000, guid: ff2b7e96ba174b34589276da934bb01a, type: 2}
+  - {fileID: 11400000, guid: 5a03f293f68733743aaf15545b785335, type: 2}
+  - {fileID: 11400000, guid: d323324b2e590eb4d944846c4745497f, type: 2}
 --- !u!4 &997378009
 Transform:
   m_ObjectHideFlags: 0

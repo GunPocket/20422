@@ -16,7 +16,7 @@ public class Block : MonoBehaviour {
 
     [SerializeField] private TextMeshPro text;
 
-    public void Init(BlockType type) {
+    public void Init(BlockSO type) {
         Value = type.Value;
         spriteRenderer.color = type.Color;
         text.text = type.Value.ToString();
