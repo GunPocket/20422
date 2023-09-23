@@ -1,35 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class ScoreManager : MonoBehaviour {
-    [SerializeField] private GameObject _ui;
-    private VisualElement _uiDocument;
-    [SerializeField] public Label ScoreValue;
+public class ScoreManager : MonoBehaviour
+{
+    private UIManager _uiManager;
 
-    [SerializeField] private int _score;
+    private float _score;
 
-    [SerializeField]
-    public int Score {
-        get {
-            return _score;
-        }
+    public float Score { 
+        get { return _score; }
         set {
-            if (value > 0)
-                _score = value;
-            else
-                return;
+            _score = value;
+            var intScore = (int)_score;
+            _uiManager.ScoreValue.text = intScore.ToString();
         }
     }
 
-    // Start is called before the first frame update
-    void Awake() {
-        _uiDocument = _ui.GetComponent<UIDocument>().rootVisualElement;
-
-        ScoreValue = _uiDocument.Q<Label>("Value");
-    }
-
-    // Update is called once per frame
-    void Update() {
-        ScoreValue.text = _score.ToString();
+    public void Initializer(UIManager uIManager) {
+           _uiManager = uIManager;
     }
 }

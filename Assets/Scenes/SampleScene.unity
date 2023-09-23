@@ -133,8 +133,9 @@ GameObject:
   m_Component:
   - component: {fileID: 76550942}
   - component: {fileID: 76550941}
+  - component: {fileID: 76550943}
   m_Layer: 5
-  m_Name: UI
+  m_Name: UIManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,52 +172,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &404808704
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 404808705}
-  - component: {fileID: 404808706}
-  m_Layer: 0
-  m_Name: ScoreManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &404808705
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 404808704}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.27453268, y: 0.8362529, z: -0.035111897}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &404808706
+--- !u!114 &76550943
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 404808704}
+  m_GameObject: {fileID: 76550940}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c7360529abd38743bb940a4d53d1d9c, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f5f2b84444077740a8a2eea1acac5b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _ui: {fileID: 76550940}
-  _score: 0
+  _debug: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,6 +416,7 @@ GameObject:
   - component: {fileID: 997378009}
   - component: {fileID: 997378008}
   - component: {fileID: 997378010}
+  - component: {fileID: 997378011}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -467,13 +437,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 997378010}
-  _scoreManager: {fileID: 404808706}
-  _ui: {fileID: 76550940}
+  _scoreManager: {fileID: 997378011}
+  _uiManager: {fileID: 76550943}
   _camera: {fileID: 519420031}
   _width: 4
   _height: 4
   _travelTime: 0.2
-  _scoreMultiplier: 0
+  _scoreMultiplier: 1
   WinCondition: 2048
   _blockPrefab: {fileID: 1901745072140048104, guid: ef692a3cfa0770b4281816b2aa9fd1c1, type: 3}
   _blockTypes:
@@ -517,6 +487,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f801ce2885a4c24c9b36923b75488ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &997378011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997378007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c7360529abd38743bb940a4d53d1d9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -524,5 +506,4 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 997378009}
-  - {fileID: 404808705}
   - {fileID: 76550942}

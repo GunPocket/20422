@@ -10,12 +10,8 @@ public class GameManager : MonoBehaviour { //https://www.youtube.com/watch?v=Teu
     [Header("Game references")]
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private ScoreManager _scoreManager;
-    [SerializeField] private GameObject _ui;
+    [SerializeField] private UIManager _uiManager;
     [SerializeField] private Camera _camera;
-
-    private VisualElement _uiDocument;
-    private Label _textGameState;
-    private Button _resetButton;
 
     [Header("Game settings")]
     [SerializeField] private int _width = 3;
@@ -37,63 +33,44 @@ public class GameManager : MonoBehaviour { //https://www.youtube.com/watch?v=Teu
 
     private List<Node> _nodes;
     private List<Block> _blocks;
+    private SpriteRenderer _board;
     private GameState _gameState;
     private int _round;
 
     private BlockSO GetBlockTypeByValue(int value) => _blockTypes.First(t => t.Value == value);
 
     private void Start() {
-        _uiDocument = _ui.GetComponent<UIDocument>().rootVisualElement;
-        _textGameState = _uiDocument.Q<Label>("GameState");
-        _resetButton = _uiDocument.Q<Button>("ResetButton");
-        _resetButton.style.display = DisplayStyle.None;
+        _scoreManager.Initializer(_uiManager);
 
-        _resetButton.clickable.clicked += delegate {
+        _uiManager.ResetButton.style.visibility = Visibility.Hidden;
+
+        _uiManager.ResetButton.clickable.clicked += delegate {
             ResetGame();
         };
 
         ChangeState(GameState.GenerateLevel);
     }
 
-    private void Update() {
-        if (_gameState != GameState.WaitingInput) {
-            return;
+    private void ResetGame() {
+        _uiManager.ResetButton.style.visibility = Visibility.Hidden;
+
+        foreach (var block in _blocks) {
+            Destroy(block.gameObject);
+        }
+        foreach (var node in _nodes) {
+            Destroy(node.gameObject);
         }
 
-        if (_playerInput.GetInput() != Vector2.zero) {
-            Shift(_playerInput.GetInput());
-        }
-    }
+        Destroy(_board);
 
-    private void ChangeState(GameState newState) {
-        _gameState = newState;
-        _textGameState.text = $"{_gameState}";
-        print("Current state: " + newState);
-        switch (newState) {
-            case GameState.GenerateLevel:
-                GenerateGrid();
-                break;
-            case GameState.SpawningBlocks:
-                SpawnBlocks(_round++ == 0 ? 2 : 1);
-                break;
-            case GameState.WaitingInput:
-                break;
-            case GameState.Moving:
-                break;
-            case GameState.Win:
-                break;
-            case GameState.Lose:
-                print("GameOver");
-                _resetButton.style.display = DisplayStyle.Flex;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
-        }
+        _blocks = null;
+        _nodes = null;
+
+        GenerateGrid();
     }
 
     private void GenerateGrid() {
         _round = 0;
-        
         _blocks = new List<Block>();
 
         GenerateNodes();
@@ -102,8 +79,8 @@ public class GameManager : MonoBehaviour { //https://www.youtube.com/watch?v=Teu
 
         _camera.gameObject.transform.position = new Vector3(center.x, center.y, -10);
 
-        var board = Instantiate(_boardPrfab, center, Quaternion.identity);
-        board.size = new Vector2(_width, _height);
+        _board = Instantiate(_boardPrfab, center, Quaternion.identity);
+        _board.size = new Vector2(_width, _height);
 
         ChangeState(GameState.SpawningBlocks);
     }
@@ -116,6 +93,94 @@ public class GameManager : MonoBehaviour { //https://www.youtube.com/watch?v=Teu
                 var node = Instantiate(_nodePrefab, new Vector2(i, j), Quaternion.identity);
                 _nodes.Add(node);
             }
+        }
+    }
+
+    private void ChangeState(GameState newState) {
+        _gameState = newState;
+        _uiManager.TextGameState.text = $"{_gameState}";
+
+        switch (newState) {
+            case GameState.GenerateLevel:
+                GenerateGrid();
+                break;
+            case GameState.SpawningBlocks:
+                SpawnBlocks(_round++ == 0 ? 2 : 1);
+                break;
+            case GameState.WaitingInput:
+                break;
+            case GameState.Moving:
+                break;
+            case GameState.Win:
+                _uiManager.ResetButton.style.visibility = Visibility.Visible;
+                break;
+            case GameState.Lose:
+                _uiManager.ResetButton.style.visibility = Visibility.Visible;
+                break;
+            case GameState.Upgrade:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
+        }
+    }
+
+    private void SpawnBlocks(int ammount) {
+
+        var freeNodes = _nodes.Where(x => x.OccupiedBlock == null).OrderBy(b => UnityEngine.Random.value).ToList();
+
+        foreach (var node in freeNodes.Take(ammount)) {
+            SpawnBlock(node, UnityEngine.Random.value > 0.8f ? 4 : 2);
+        }
+
+        if (freeNodes.Count() == 1) {
+            if (!CheckIfCanMove()) {
+                ChangeState(GameState.Lose);
+                return;
+            } else {
+                ChangeState(GameState.WaitingInput);
+                return;
+            }
+        }
+
+        ChangeState(_blocks.Any(b => b.Value == WinCondition) ? GameState.Win : GameState.WaitingInput);
+    }
+
+    private void SpawnBlock(Node node, int value) {
+        var block = Instantiate(_blockPrefab, node.Position, Quaternion.identity);
+        block.Init(GetBlockTypeByValue(value));
+        block.SetBlock(node);
+        _blocks.Add(block);
+    }
+
+    private bool CheckIfCanMove() {
+        var orderedBlocks = _blocks.OrderBy(b => b.Position.x).ThenBy(b => b.Position.y).ToList();
+        foreach (var block in orderedBlocks) {
+            var next = block.Node;
+            do {
+                block.SetBlock(next);
+
+                var possibleNodeRight = GetNodeAtPosition(next.Position + Vector2.right);
+                var possibleNodeLeft = GetNodeAtPosition(next.Position + Vector2.left);
+                var possibleNodeUp = GetNodeAtPosition(next.Position + Vector2.up);
+                var possibleNodeDown = GetNodeAtPosition(next.Position + Vector2.down);
+
+                if (possibleNodeRight?.OccupiedBlock.Value == block.Value) return true;
+                if (possibleNodeLeft?.OccupiedBlock.Value == block.Value) return true;
+                if (possibleNodeUp?.OccupiedBlock.Value == block.Value) return true;
+                if (possibleNodeDown?.OccupiedBlock.Value == block.Value) return true;
+            } while (next != block.Node);
+
+        }
+        return false;
+    }
+
+    private void Update() {
+        if (_gameState != GameState.WaitingInput) {
+            return;
+        }
+
+        if (_playerInput.GetInput() != Vector2.zero) {
+            Shift(_playerInput.GetInput());
         }
     }
 
@@ -165,9 +230,13 @@ public class GameManager : MonoBehaviour { //https://www.youtube.com/watch?v=Teu
 
     }
 
+    private Node GetNodeAtPosition(Vector2 pos) {
+        return _nodes.FirstOrDefault(n => n.Position == pos);
+    }
+
     private void MergeBlocks(Block baseBlock, Block mergingBlock) {
         var newValue = baseBlock.Value * 2;
-        _scoreManager.Score += newValue;
+        _scoreManager.Score += _scoreMultiplier * newValue;
 
         RemoveBlock(baseBlock);
 
@@ -179,81 +248,6 @@ public class GameManager : MonoBehaviour { //https://www.youtube.com/watch?v=Teu
     private void RemoveBlock(Block block) {
         _blocks.Remove(block);
         Destroy(block.gameObject);
-    }
-
-    private void SpawnBlock(Node node, int value) {
-        var block = Instantiate(_blockPrefab, node.Position, Quaternion.identity);
-        block.Init(GetBlockTypeByValue(value));
-        block.SetBlock(node);
-        _blocks.Add(block);
-
-    }
-
-    private Node GetNodeAtPosition(Vector2 pos) {
-        return _nodes.FirstOrDefault(n => n.Position == pos);
-    }
-
-    private void SpawnBlocks(int ammount) {
-
-        var freeNodes = _nodes.Where(x => x.OccupiedBlock == null).OrderBy(b => UnityEngine.Random.value).ToList();
-
-        foreach (var node in freeNodes.Take(ammount)) {
-            SpawnBlock(node, UnityEngine.Random.value > 0.8f ? 4 : 2);
-        }
-
-        if (freeNodes.Count() == 1) {
-            if (!CheckIfCanMove()) {
-                ChangeState(GameState.Lose);
-                return;
-            } else {
-                ChangeState(GameState.WaitingInput);
-                return;
-            }
-        }
-
-        ChangeState(_blocks.Any(b => b.Value == WinCondition) ? GameState.Win : GameState.WaitingInput);
-    }
-
-    private bool CheckIfCanMove() {
-        var orderedBlocks = _blocks.OrderBy(b => b.Position.x).ThenBy(b => b.Position.y).ToList();
-        foreach (var block in orderedBlocks) {
-            var next = block.Node;
-            do {
-                block.SetBlock(next);
-
-                var possibleNodeRight = GetNodeAtPosition(next.Position + Vector2.right);
-                var possibleNodeLeft = GetNodeAtPosition(next.Position + Vector2.left);
-                var possibleNodeUp = GetNodeAtPosition(next.Position + Vector2.up);
-                var possibleNodeDown = GetNodeAtPosition(next.Position + Vector2.down);
-
-                if (possibleNodeRight?.OccupiedBlock.Value == block.Value) return true;
-                if (possibleNodeLeft?.OccupiedBlock.Value == block.Value) return true;
-                if (possibleNodeUp?.OccupiedBlock.Value == block.Value) return true;
-                if (possibleNodeDown?.OccupiedBlock.Value == block.Value) return true;
-            } while (next != block.Node);
-
-        }
-        return false;
-    }
-
-    private void ResetGame() {
-        _resetButton.style.display = DisplayStyle.None;
-
-        foreach (var block in _blocks) {
-            Destroy(block.gameObject);
-        }
-        foreach (var node in _nodes) {
-            Destroy(node.gameObject);
-        }
-        
-        _blocks = null;
-        _blocks = new List<Block>();
-        _round = 0;
-
-        GenerateNodes();
-
-        ChangeState(GameState.SpawningBlocks);
-
     }
 }
 
@@ -272,5 +266,6 @@ public enum GameState {
     WaitingInput,
     Moving,
     Win,
-    Lose
+    Lose,
+    Upgrade
 }
