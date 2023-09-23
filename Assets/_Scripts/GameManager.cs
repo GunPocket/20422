@@ -2,26 +2,38 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using static Unity.VisualScripting.Member;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour { //https://www.youtube.com/watch?v=TeurfjuEIgA
-    [SerializeField] private PlayerInput playerInput;
 
+    [Header("Game references")]
+    [SerializeField] private PlayerInput _playerInput;
+    [SerializeField] private ScoreManager _scoreManager;
+    [SerializeField] private GameObject _ui;
+    [SerializeField] private Camera _camera;
+
+    private VisualElement _uiDocument;
+    private Label _textGameState;
+    private Button _resetButton;
+
+    [Header("Game settings")]
     [SerializeField] private int _width = 3;
     [SerializeField] private int _height = 3;
-
     [SerializeField] private float _travelTime = 0.2f;
+    [SerializeField] private float _scoreMultiplier = 1;
 
     public int WinCondition = 2048;
 
+    [Header("Blocks")]
     [SerializeField] private Block _blockPrefab;
-    [SerializeField] private Node _nodePrefab;
-    [SerializeField] private SpriteRenderer _boardPrfab;
-
     [SerializeField] private List<BlockSO> _blockTypes;
+
+    [Header("Nodes")]
+    [SerializeField] private Node _nodePrefab;
+
+    [Header("Board")]
+    [SerializeField] private SpriteRenderer _boardPrfab;
 
     private List<Node> _nodes;
     private List<Block> _blocks;
@@ -31,6 +43,15 @@ public class GameManager : MonoBehaviour { //https://www.youtube.com/watch?v=Teu
     private BlockSO GetBlockTypeByValue(int value) => _blockTypes.First(t => t.Value == value);
 
     private void Start() {
+        _uiDocument = _ui.GetComponent<UIDocument>().rootVisualElement;
+        _textGameState = _uiDocument.Q<Label>("GameState");
+        _resetButton = _uiDocument.Q<Button>("ResetButton");
+        _resetButton.style.display = DisplayStyle.None;
+
+        _resetButton.clickable.clicked += delegate {
+            ResetGame();
+        };
+
         ChangeState(GameState.GenerateLevel);
     }
 
@@ -39,13 +60,14 @@ public class GameManager : MonoBehaviour { //https://www.youtube.com/watch?v=Teu
             return;
         }
 
-        if (playerInput.GetInput() != Vector2.zero) {
-            Shift(playerInput.GetInput());
+        if (_playerInput.GetInput() != Vector2.zero) {
+            Shift(_playerInput.GetInput());
         }
     }
 
     private void ChangeState(GameState newState) {
         _gameState = newState;
+        _textGameState.text = $"{_gameState}";
         print("Current state: " + newState);
         switch (newState) {
             case GameState.GenerateLevel:
@@ -61,9 +83,8 @@ public class GameManager : MonoBehaviour { //https://www.youtube.com/watch?v=Teu
             case GameState.Win:
                 break;
             case GameState.Lose:
-                _round = 0;
-                SpawnBlocks(2);
-                ChangeState(GameState.SpawningBlocks);
+                print("GameOver");
+                _resetButton.style.display = DisplayStyle.Flex;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
@@ -72,8 +93,23 @@ public class GameManager : MonoBehaviour { //https://www.youtube.com/watch?v=Teu
 
     private void GenerateGrid() {
         _round = 0;
-        _nodes = new List<Node>();
+        
         _blocks = new List<Block>();
+
+        GenerateNodes();
+
+        var center = new Vector2((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f);
+
+        _camera.gameObject.transform.position = new Vector3(center.x, center.y, -10);
+
+        var board = Instantiate(_boardPrfab, center, Quaternion.identity);
+        board.size = new Vector2(_width, _height);
+
+        ChangeState(GameState.SpawningBlocks);
+    }
+
+    private void GenerateNodes() {
+        _nodes = new List<Node>();
 
         for (int i = 0; i < _width; i++) {
             for (int j = 0; j < _height; j++) {
@@ -81,13 +117,6 @@ public class GameManager : MonoBehaviour { //https://www.youtube.com/watch?v=Teu
                 _nodes.Add(node);
             }
         }
-
-        var center = new Vector2((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f);
-
-        var board = Instantiate(_boardPrfab, center, Quaternion.identity);
-        board.size = new Vector2(_width, _height);
-
-        ChangeState(GameState.SpawningBlocks);
     }
 
     private void Shift(Vector2 dir) {
@@ -137,9 +166,13 @@ public class GameManager : MonoBehaviour { //https://www.youtube.com/watch?v=Teu
     }
 
     private void MergeBlocks(Block baseBlock, Block mergingBlock) {
-        SpawnBlock(baseBlock.Node, baseBlock.Value * 2);
+        var newValue = baseBlock.Value * 2;
+        _scoreManager.Score += newValue;
 
         RemoveBlock(baseBlock);
+
+        SpawnBlock(baseBlock.Node, newValue);
+
         RemoveBlock(mergingBlock);
     }
 
@@ -201,6 +234,26 @@ public class GameManager : MonoBehaviour { //https://www.youtube.com/watch?v=Teu
 
         }
         return false;
+    }
+
+    private void ResetGame() {
+        _resetButton.style.display = DisplayStyle.None;
+
+        foreach (var block in _blocks) {
+            Destroy(block.gameObject);
+        }
+        foreach (var node in _nodes) {
+            Destroy(node.gameObject);
+        }
+        
+        _blocks = null;
+        _blocks = new List<Block>();
+        _round = 0;
+
+        GenerateNodes();
+
+        ChangeState(GameState.SpawningBlocks);
+
     }
 }
 
